@@ -1,6 +1,3 @@
-Certainly! Here's an updated version of the README.md file with instructions for spinning up the Docker container and setting environment variables for MongoDB connection details:
-
-```markdown
 # Plant Tracker CLI App
 
 A command-line interface (CLI) application for tracking plants using Python and MongoDB.
@@ -90,6 +87,10 @@ Or use:
 ```bash
 docker run -it --rm --env-file .env plant-tracker
 ```
+Once inside the container, you can use the alias `plant-tracker` to run the application.
+```bash
+plant-tracker <command>
+```
 ## Usage
 
 Run the application using the following command:
@@ -142,5 +143,3 @@ Feel free to contribute by opening issues or submitting pull requests.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 ```
-
-These instructions now include guidance on configuring environment variables for MongoDB connection details and spinning up the Docker container with these variables. Adjust the values as needed for your specific MongoDB setup.
