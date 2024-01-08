@@ -1,7 +1,6 @@
-# plant_tracker/db.py
 from pymongo import MongoClient
 import os
-from datetime import datetime, timedelta
+from datetime import datetime
 
 def mongodb_connection():
     try:
