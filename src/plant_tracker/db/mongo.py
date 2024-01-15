@@ -1,6 +1,8 @@
-from plant_tracker.db import Database
-from pymongo import MongoClient
 from datetime import datetime
+
+from pymongo import MongoClient
+
+from plant_tracker.db import Database
 
 
 class MongoDatabase(Database):

@@ -1,8 +1,9 @@
+import argparse
+import os
+from datetime import datetime
+
 from plant_tracker.db import Database
 from plant_tracker.db.mongo import MongoDatabase
-import os
-import argparse
-from datetime import datetime
 
 
 def format_time_difference(last_watered):
