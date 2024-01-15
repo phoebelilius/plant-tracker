@@ -1,9 +1,9 @@
 # tests/test_main.py
 import unittest
 from unittest.mock import patch
-from datetime import datetime, timedelta
 from pymongo import MongoClient
-from plant_tracker.db import mongodb_connection, add_plant, edit_plant, delete_plant, water_plant, show_plants
+from plant_tracker.db.db import add_plant, edit_plant, delete_plant, water_plant
+
 
 class TestPlantTracker(unittest.TestCase):
     def setUp(self):

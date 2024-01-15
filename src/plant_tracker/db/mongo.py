@@ -1,13 +1,14 @@
+from plant_tracker.db import Database
 from pymongo import MongoClient
-from dbv2 import Database
 from datetime import datetime
 
 
 class MongoDatabase(Database):
-    def __init__(self, mongo_connection_str: str):
+
+    def __init__(self, mongo_connection_str: str, db_name: str, collection_name: str):
         self._client = MongoClient(mongo_connection_str)
-        self._db = self._client["plant_database"]
-        self._plants = self._db["plants"]
+        self._db = self._client[db_name]
+        self._plants = self._db[collection_name]
         # check if connection is successful
         self._db.command("ping")
         print("MongoDB connection successful.")

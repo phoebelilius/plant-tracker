@@ -1,6 +1,6 @@
-# plant_tracker/main.py
-from dbv2 import Database
-from db_mongo import MongoDatabase
+from plant_tracker.db import Database
+from plant_tracker.db.mongo import MongoDatabase
+import os
 import argparse
 from datetime import datetime
 
@@ -17,9 +17,46 @@ def format_time_difference(last_watered):
         return "Less than an hour ago"
 
 
+def mongodb_connection():
+    try:
+        print("Connecting to MongoDB...")
+        username = os.getenv("MONGODB_USERNAME")
+        password = os.getenv("MONGODB_PASSWORD")
+        hostname = os.getenv("MONGODB_HOSTNAME")
+        port = os.getenv("MONGODB_PORT")
+        database = os.getenv("MONGODB_DATABASE")
+
+        # if hostname empty, connect to localhost
+        if hostname is None:
+            hostname = "localhost"
+        # if port empty, connect to 27017
+        if port is None:
+            port = "27017"
+        # if database empty, connect to 'plant_database'
+        if database is None:
+            database = "plant_database"
+
+        # if username and password empty, connect without authentication
+        if username is None and password is None:
+            print(
+                f"Connecting to MongoDB without authentication: mongodb://{hostname}:{port}/{database}"
+            )
+            client = MongoDatabase(f"mongodb://{hostname}:{port}/{database}", database, "plants")
+        else:
+            print(
+                f"Connecting to MongoDB with authentication: mongodb://{username}:{password}@{hostname}:{port}/{database}"
+            )
+            client = MongoDatabase(f"mongodb://{username}:{password}@{hostname}:{port}/{database}", database, "plants")
+        return client
+
+    except Exception as e:
+        print(f"Error connecting to MongoDB: {e}")
+        exit(1)
+
+
 def main():
     # Ensure we are connected to the database
-    db: Database = MongoDatabase("mongodb://localhost:27017/")
+    db: Database = mongodb_connection()
 
     parser = argparse.ArgumentParser(description="Plant Tracking CLI App")
     parser.add_argument("command", choices=["add", "edit", "delete", "show", "water"], help="Operation to perform")
@@ -52,6 +89,7 @@ def main():
     elif args.command == "water":
         name = input("Enter plant name to water: ")
         db.water_plant(name)
+
 
 if __name__ == "__main__":
     main()

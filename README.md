@@ -62,6 +62,12 @@ MONGODB_DATABASE=your_database
 
 Replace `your_username`, `your_password`, `your_database` with your MongoDB credentials. If your MongoDB server is running on a different host or port, adjust `MONGODB_HOSTNAME` and `MONGODB_PORT` accordingly.
 
+## Usage with pip
+```bash
+pip install .
+python -m plant_tracker <command>
+```
+
 ## Usage with Docker
 
 Build the Docker image:

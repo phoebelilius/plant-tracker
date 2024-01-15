@@ -14,7 +14,7 @@ COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Append the alias to the .bashrc file
-RUN echo 'alias plant-tracker="python plant_tracker/main.py"' >> /root/.bashrc
+RUN echo 'alias plant-tracker="python src/plant_tracker/__main__.py"' >> /root/.bashrc
 
 # Set the default command to open an interactive shell
 CMD ["/bin/bash"]

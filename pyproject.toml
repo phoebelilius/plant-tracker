@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "plant_tracker"
+version = "0.0.1"
+description = "A simple tool to track your plant care"
+authors = [{name = "Phoebe Lilius", email = "phoebe@uma.es"}]
+readme = "README.md"
+requires-python = ">=3.7.0"
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "pymongo>=3.12.0",  # Not tested with older versions
+]
+
+[project.urls]
+repository = "https://github.com/phoebelilius/plant-tracker"
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+    "ruff"
+]
+
+
+
+
