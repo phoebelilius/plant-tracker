@@ -41,12 +41,18 @@ def mongodb_connection():
             print(
                 f"Connecting to MongoDB without authentication: mongodb://{hostname}:{port}/{database}"
             )
-            client = MongoDatabase(f"mongodb://{hostname}:{port}/{database}", database, "plants")
+            client = MongoDatabase(
+                f"mongodb://{hostname}:{port}/{database}", database, "plants"
+            )
         else:
             print(
                 f"Connecting to MongoDB with authentication: mongodb://{username}:{password}@{hostname}:{port}/{database}"
             )
-            client = MongoDatabase(f"mongodb://{username}:{password}@{hostname}:{port}/{database}", database, "plants")
+            client = MongoDatabase(
+                f"mongodb://{username}:{password}@{hostname}:{port}/{database}",
+                database,
+                "plants",
+            )
         return client
 
     except Exception as e:
@@ -59,7 +65,11 @@ def main():
     db: Database = mongodb_connection()
 
     parser = argparse.ArgumentParser(description="Plant Tracking CLI App")
-    parser.add_argument("command", choices=["add", "edit", "delete", "show", "water"], help="Operation to perform")
+    parser.add_argument(
+        "command",
+        choices=["add", "edit", "delete", "show", "water"],
+        help="Operation to perform",
+    )
 
     args = parser.parse_args()
 
@@ -72,7 +82,9 @@ def main():
         name = input("Enter plant name to edit: ")
         updates = {
             "species": input("Enter new species (leave blank to keep existing): "),
-            "watering_schedule": input("Enter new watering schedule (leave blank to keep existing): "),
+            "watering_schedule": input(
+                "Enter new watering schedule (leave blank to keep existing): "
+            ),
         }
         db.edit_plant(name, updates)
     elif args.command == "delete":
@@ -82,9 +94,14 @@ def main():
         print("All plants:")
         for plant in db.get_plants():
             last_watered = plant.get("last_watered")
-            formatted_time_difference = format_time_difference(last_watered) if last_watered else "Never watered"
+            formatted_time_difference = (
+                format_time_difference(last_watered)
+                if last_watered
+                else "Never watered"
+            )
             print(
-                f"Plant: {plant['name']}, Species: {plant['species']}, Watering Schedule: {plant['watering_schedule']}, Last Watered: {formatted_time_difference}")
+                f"Plant: {plant['name']}, Species: {plant['species']}, Watering Schedule: {plant['watering_schedule']}, Last Watered: {formatted_time_difference}"
+            )
 
     elif args.command == "water":
         name = input("Enter plant name to water: ")

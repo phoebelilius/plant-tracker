@@ -4,7 +4,6 @@ from datetime import datetime
 
 
 class MongoDatabase(Database):
-
     def __init__(self, mongo_connection_str: str, db_name: str, collection_name: str):
         self._client = MongoClient(mongo_connection_str)
         self._db = self._client[db_name]
@@ -14,12 +13,14 @@ class MongoDatabase(Database):
         print("MongoDB connection successful.")
 
     def add_plant(self, name: str, species: str, watering_schedule: str):
-        result = self._plants.insert_one({
-            "name": name,
-            "species": species,
-            "watering_schedule": watering_schedule,
-            "last_watered": None,
-        })
+        result = self._plants.insert_one(
+            {
+                "name": name,
+                "species": species,
+                "watering_schedule": watering_schedule,
+                "last_watered": None,
+            }
+        )
         print(f"Plant added with ID: {result.inserted_id}")
 
     def edit_plant(self, name: str, updates: dict):
