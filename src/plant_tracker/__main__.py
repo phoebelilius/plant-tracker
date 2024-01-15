@@ -2,8 +2,8 @@ import argparse
 import os
 from datetime import datetime
 
-from plant_tracker.db import Database
-from plant_tracker.db.mongo import MongoDatabase
+from db import Database
+from db.mongo import MongoDatabase
 
 
 def format_time_difference(last_watered):
@@ -47,7 +47,7 @@ def mongodb_connection():
             )
         else:
             print(
-                f"Connecting to MongoDB with authentication: mongodb://{username}:{password}@{hostname}:{port}/{database}"
+                f"Connecting to MongoDB with authentication: mongodb://{username}:<redacted>@{hostname}:{port}/{database}"
             )
             client = MongoDatabase(
                 f"mongodb://{username}:{password}@{hostname}:{port}/{database}",

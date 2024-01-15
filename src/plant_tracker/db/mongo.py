@@ -2,7 +2,7 @@ from datetime import datetime
 
 from pymongo import MongoClient
 
-from plant_tracker.db import Database
+from db import Database
 
 
 class MongoDatabase(Database):
