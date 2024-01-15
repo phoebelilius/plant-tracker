@@ -2,6 +2,19 @@
 from dbv2 import Database
 from db_mongo import MongoDatabase
 import argparse
+from datetime import datetime
+
+
+def format_time_difference(last_watered):
+    now = datetime.now()
+    time_difference = now - last_watered
+
+    if time_difference.days > 0:
+        return f"{time_difference.days} {'day' if time_difference.days == 1 else 'days'} ago"
+    elif time_difference.seconds // 3600 > 0:
+        return f"{time_difference.seconds // 3600} {'hour' if time_difference.seconds // 3600 == 1 else 'hours'} ago"
+    else:
+        return "Less than an hour ago"
 
 
 def main():
@@ -29,7 +42,13 @@ def main():
         name = input("Enter plant name to delete: ")
         db.delete_plant(name)
     elif args.command == "show":
-        db.get_plants()
+        print("All plants:")
+        for plant in db.get_plants():
+            last_watered = plant.get("last_watered")
+            formatted_time_difference = format_time_difference(last_watered) if last_watered else "Never watered"
+            print(
+                f"Plant: {plant['name']}, Species: {plant['species']}, Watering Schedule: {plant['watering_schedule']}, Last Watered: {formatted_time_difference}")
+
     elif args.command == "water":
         name = input("Enter plant name to water: ")
         db.water_plant(name)
