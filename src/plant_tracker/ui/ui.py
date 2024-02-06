@@ -3,6 +3,10 @@ import streamlit as st
 from plant_tracker.common import format_time_difference
 from plant_tracker.db import Database
 from plant_tracker.db.mongo import MongoDatabase
+from plant_tracker.identifier.identifier import APIClient
+
+# USAGE
+# streamlit run src/plant_tracker/ui/ui.py
 
 
 def water_plant(name: str):
@@ -23,7 +27,9 @@ if __name__ == "__main__":
     db = connect_to_db()
 
     st.header("Plant Tracker")
-    tab_view, tab_add = st.tabs(["View plants", "Add a new plant"])
+    tab_view, tab_add, tab_search = st.tabs(
+        ["View plants", "Add a new plant", "Search species"]
+    )
 
     with tab_view:
         st.header("View Plants")
@@ -59,3 +65,12 @@ if __name__ == "__main__":
             db.add_plant(name, species, watering_schedule)
             # show success message
             st.success("Added plant!", icon="✅")
+
+    with tab_search:
+        st.header("Search Species")
+        query = st.text_input("Search for species")
+        if st.button("Search"):
+            identifier = APIClient()
+            results = identifier.get(query)
+            st.write("Search results")
+            st.table(data=results)
