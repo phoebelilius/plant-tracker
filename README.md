@@ -76,24 +76,14 @@ Build the Docker image:
 docker build -t plant-tracker .
 ```
 
+Fill in the `.env` file with the MongoDB connection details and Perenual's API key.
 Run the Docker container with environment variables for MongoDB connection:
-
 ```bash
-docker run -it --rm \
-  -e MONGODB_HOSTNAME=$MONGODB_HOSTNAME \
-  -e MONGODB_PORT=$MONGODB_PORT \
-  -e MONGODB_USERNAME=$MONGODB_USERNAME \
-  -e MONGODB_PASSWORD=$MONGODB_PASSWORD \
-  -e MONGODB_DATABASE=$MONGODB_DATABASE \
-  plant-tracker
+docker run -it --rm --env-file .env --network="host" plant-tracker
 ```
+This gives you the URL to view the UI.
 
-Replace `$MONGODB_HOSTNAME`, `$MONGODB_PORT`, `$MONGODB_USERNAME`, `$MONGODB_PASSWORD`, and `$MONGODB_DATABASE` with the actual values from your `.env` file.
-Or use:
-```bash
-docker run -it --rm --env-file .env plant-tracker
-```
-Once inside the container, you can use the alias `plant-tracker` to run the application.
+You can also go inside the container, and use the alias `plant-tracker` to run the application in CLI mode.
 ```bash
 plant-tracker <command>
 ```

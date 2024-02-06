@@ -5,7 +5,7 @@ FROM python:3.8-slim
 WORKDIR /app
 
 # Add the project directory to the PYTHONPATH
-ENV PYTHONPATH=/app:$PYTHONPATH
+ENV PYTHONPATH "/app/src"
 
 # Copy the application files to the container
 COPY . /app
@@ -17,4 +17,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN echo 'alias plant-tracker="python src/plant_tracker/__main__.py"' >> /root/.bashrc
 
 # Set the default command to open an interactive shell
-CMD ["/bin/bash"]
+#CMD ["/bin/bash"]
+
+# Set the default command to run the application in UI mode
+CMD ["streamlit", "run", "src/plant_tracker/ui/ui.py"]
